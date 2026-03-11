@@ -125,5 +125,39 @@ FROM "orders" o
 LEFT JOIN customer c ON c.id = o.customer_id
 WHERE c.id IS NULL;
 
+# ----
+
+# Transforming queries into "reports" + performance + integrity
+
+# General KPI
+
+SELECT COUNT(*) AS qtd_orders, ROUND(SUM(total),2) AS invoicing_total, ROUND(AVG(total),2) AS ticket_medium FROM "orders";
+
+# ----
+
+# Top 5 clients by revenue
+
+SELECT c.id, c.name, c.city, ROUND(SUM(o.total),2) AS total_spent FROM customer c JOIN "orders" o ON o.customer_id=c.id GROUP BY c.id, c.name, c.city ORDER BY total_spent DESC LIMIT 5;]
+
+# ---- 
+
+# "Who didn't buy?" (customers without orders) — LEFT JOIN
+
+SELECT c.id, c.name, c.city FROM customer c LEFT JOIN "orders" o ON o.customer_id=c.id WHERE o.id IS NULL ORDER BY c.name;
+
+# ----
+
+# Performance (indices)
+
+CREATE INDEX IF NOT EXISTS idx_orders_customer_id ON "orders"(customer_id);
+CREATE INDEX IF NOT EXISTS idx_orders_date ON "orders"(date);
+EXPLAIN QUERY PLAN SELECT * FROM "orders" WHERE customer_id = 1;
+
+# ----
+
+
+
+
+
 
 
