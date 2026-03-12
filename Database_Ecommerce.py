@@ -1,12 +1,16 @@
 # let's set up a more professional e-commerce platform
 
+# Initial configuration
 import sqlite3
 
 conn = sqlite3.connect("ecommerce.db")
 cursor = conn.cursor()
 
+# Activation of foreign keys
+# Creation of tables (customer, category, product, orders, order_item, payment)
 cursor.executescript("""
-PRAGMA foreign_keys = ON;
+PRAGMA foreign_keys = ON; 
+
 
 CREATE TABLE IF NOT EXISTS customer (
   id INTEGER PRIMARY KEY,
@@ -133,9 +137,11 @@ INSERT OR IGNORE INTO payment (id, order_id, payment_date, amount, method, statu
 (10, 10, '2025-03-18', 780.00, 'cash', 'paid');
 """)
 
+# Confirmation and closing
 conn.commit()
 conn.close()
 
+# Confirmation message
 print("Bank ecommerce.db successfully created!")
 
 
