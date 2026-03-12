@@ -2,13 +2,11 @@
 
 
 # Import and initial setup
-
 import sqlite3
 
 DB_NAME = "ecommerce.db"
 
 # User interface
-
 print("=== CONSULTATION SQL - ECOMMERCE ===")
 print("Enter your SQL query.")
 print("When you are finished, type END on a new line.\n")
@@ -23,13 +21,11 @@ while True:
 query = "\n".join(lines).strip()
 
 # Empty query check
-
 if not query:
     print("None query were typed.")
     exit()
 
 # SQL query execution
-
 try:
     conn = sqlite3.connect(DB_NAME)
     conn.row_factory = sqlite3.Row
@@ -38,7 +34,6 @@ try:
     cursor.execute(query)
 
 # SQL query processing
-
     if query.lower().startswith("select"):
         rows = cursor.fetchall()
 
